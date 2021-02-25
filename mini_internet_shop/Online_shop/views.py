@@ -68,11 +68,11 @@ def auth(request):
     return render(request,'accounts/login.html',context)
 
 @login_required(login_url=['login'])
-def UserProfileForm(request):
+def UserProfile_view(request):
     user = request.user.userprofileform
-    form = UserProfileForm(instance=user)
+    form = UserProfile_view(instance=user)
     if request.method == 'POST':
-        form = UserProfileForm(request.POST,request.FILES,instance=user)
+        form = UserProfile_view(request.POST,request.FILES,instance=user)
         form.save()
     context = {'form':form}
     return render(request,'accounts/accounts.html',context)
