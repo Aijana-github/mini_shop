@@ -10,7 +10,10 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from .forms import RegistrationForm, UserProfile, UserProfileForm
+
+
+from .forms import RegistrationForm, UserProfileForm
+from .models import Products
 from .tokens import account_activation_token
 
 
@@ -68,13 +71,19 @@ def auth(request):
     return render(request,'accounts/login.html',context)
 
 @login_required(login_url=['login'])
-def UserProfile_view(request):
-    user = request.user.userprofileform
-    form = UserProfile_view(instance=user)
-    if request.method == 'POST':
-        form = UserProfile_view(request.POST,request.FILES,instance=user)
+def CreateUser(request):
+    user = request.user.userprofile
+    form = UserProfileForm(instance= user)
+    if request.method =='POST':
+        form = UserProfileForm(request.POST,request.FILES,instance=user)
         form.save()
     context = {'form':form}
     return render(request,'accounts/accounts.html',context)
 
 
+
+def productList(request):
+    products = Products.objects.all()
+
+    context = {'products': products}
+    return render (request, 'accounts/products.html', context)

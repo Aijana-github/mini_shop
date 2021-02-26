@@ -1,4 +1,4 @@
-from .models import UserProfile
+from .models import UserProfile, Products
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -13,8 +13,9 @@ class RegistrationForm(UserCreationForm):
         fields = ['email', 'username', 'password1', 'password2']
 
 
-class UserProfile(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = '__all__'
         exclude = ['user']
+
